@@ -279,6 +279,7 @@
 % Introdução
 % ----------------------------------------------------------
 \chapter*[Introdução]{Introdução}
+
 \addcontentsline{toc}{chapter}{Introdução}
 Atualmente, antenas estão presentes em diversas aplicações tecnológicas que dependem da transmissão/recepção de informações, desde redes sem fio até carros\cite{jose2025butler,sakhiya2023low}. De acordo com \citeonline{liu2019design}, uma das formas de superar perda de espaço livre e atenuação atmosférica em altas frequências é por meio de sistemas de antena inteligentes (\textit{Smart antennas}), que possibilitam a orientação dos feixes sem a movimentação física da antena. \textit{Smart antennas} são compostas por um \textit{array} (conjunto) de antenas que, ao formar multiplos feixes (\textit{multiple beam-forming}) com uma diferença de ângulo fixa, diminuem a probabilidade de interferência, sendo uma das redes de formação de feixes a matriz de Butler \cite{augusto2016butler, bhowmik2017modelling}. Em um arranjo de antenas não inteligentes, o uso de defasadores variáveis se torna essencial, definindo a defasagem individual para cada antena.
 
@@ -314,7 +315,7 @@ Portanto, a topologia final utilizada (figura \ref{fig:topologiaUtilizada}) perm
   \end{center}
 \end{figure}
 
-Feita a matriz de Butler, serão feitas as quatro antenas de \textit{patch} retangular que serão alimentadas pela matriz de Butler.
+Feita a matriz de Butler, serão feitas as quatro antenas de \textit{patch} retangular que serão alimentadas pelos feixes gerados pela matriz de Butler.
 
 A validação se dará, primeiramente, por meio dos softwares ADS e Ansys HFSS. Validadas as dimensões de cada elemento, serão feitas, por meio de uma gravadora a laser, as placas de circuito impresso da matriz de Butler e das antenas.
 
@@ -339,7 +340,17 @@ O objetivo geral desse projeto consiste em implementar uma matriz de Butler 4x4 
 % Capitulo de textual  
 % ----------------------------------------------------------
 \chapter*[Resultados Esperados]{Resultados Esperados}
-Como resultado final, teremos uma matriz de Butler 4x4 funcional constituida de quatro acopladores híbridos de \(90^\circ\) e dois defasadores de \(45^\circ\), direcionando os feixes de entrada para um conjunto de antenas. 
+\addcontentsline{toc}{chapter}{Resultados Esperados}
+
+Como resultado final, teremos uma matriz de Butler 4x4 funcional constituida de quatro acopladores híbridos de \(90^\circ\) e dois defasadores de \(45^\circ\), direcionando os feixes de entrada para um conjunto de 4 antenas \textit{rectangular patch}, como mostra a figura \ref{fig:resultadoFinal}
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Matriz de Butler e antenas \textit{rectangular patch}.}\label{fig:resultadoFinal}
+    \includegraphics[width=0.35\textwidth]{figures/resultadoFinal.png}
+    \caption*{Fonte: Adaptado de \cite{adamidis2019design}) }
+  \end{center}
+\end{figure}
 
 \iffalse
 \index{elementos textuais}A norma ABNT NBR 15287:2011, p. 5, apresenta a
@@ -361,10 +372,10 @@ seguinte orientação quanto aos elementos textuais:
 % ---
 % Conclusão
 % ---
-\chapter*[Considerações finais]{Considerações finais}
-\addcontentsline{toc}{chapter}{Considerações finais}
+%\chapter*[Considerações finais]{Considerações finais}
+%\addcontentsline{toc}{chapter}{Considerações finais}
 
-\lipsum[31-33]
+%\lipsum[31-33]
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
@@ -391,28 +402,20 @@ seguinte orientação quanto aos elementos textuais:
 % ---
 % Inicia os apêndices
 % ---
+\iffalse
 \begin{apendicesenv}
 
-% Imprime uma página indicando o início dos apêndices
+Imprime uma página indicando o início dos apêndices
 \partapendices
 
 % ----------------------------------------------------------
-\chapter{Quisque libero justo}
+%\chapter{Quisque libero justo}
 % ----------------------------------------------------------
-\begin{figure}
-  \begin{center}
-    \includegraphics[width=0.95\textwidth]{figures/unb_logo.png}
-  \end{center}
-  \caption{Caption 1213}\label{fig:unb}
-\end{figure}
-
-\lipsum[50]
 
 % ----------------------------------------------------------
-\chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
-ac pretium ante justo a nulla curabitur tristique arcu eu metus}
+%\chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula ac pretium ante justo a nulla curabitur tristique arcu eu metus}
 % ----------------------------------------------------------
-\lipsum[55-57]
+%\lipsum[55-57]
 
 \end{apendicesenv}
 % ---
@@ -425,6 +428,7 @@ ac pretium ante justo a nulla curabitur tristique arcu eu metus}
 % ---
 % Inicia os anexos
 % ---
+
 \begin{anexosenv}
 % Imprime uma página indicando o início dos anexos \partanexos
 
@@ -451,7 +455,7 @@ parturient montes nascetur ridiculus mus}
 %---------------------------------------------------------------------
 % INDICE REMISSIVO
 %---------------------------------------------------------------------
-
+\fi
 \phantompart
 
 \printindex
