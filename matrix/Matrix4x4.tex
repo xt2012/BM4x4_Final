@@ -56,6 +56,10 @@
 % ---
 % Pacotes fundamentais 
 % ---
+
+\usepackage{caption} %Para ter uma caption sem referência a imagem(Figura x - descrição, apenas: descrição)
+
+
 \usepackage{lmodern}			% Usa a fonte Latin Modern
 \usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
 \usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
@@ -276,11 +280,45 @@
 % ----------------------------------------------------------
 \chapter*[Introdução]{Introdução}
 \addcontentsline{toc}{chapter}{Introdução}
-Atualmente, antenas estão presentes em diversas aplicações tecnológicas que dependem da transmissão/recepção de informações, desde redes sem fio até carros\cite{jose2025butler,sakhiya2023low}. De acordo com \citeonline{liu2019design}, uma das formas de superar perda de espaço livre e atenuação atmosférica em altas frequências é por meio de sistemas de antena inteligentes (\textit{Smart antennas}), que possibilitam a orientação dos feixes sem a movimentação física da antena. \textit{Smart antennas} são compostas por um \textit{array} (conjunto) de antenas que, ao formar multiplos feixes (\textit{multiple beam-forming}) com uma diferença de ângulo fixa, diminuem a probabilidade de interferência, sendo uma das redes de formação de feixes a matriz de Butler \cite{augusto2016butler, bhowmik2017modelling}. Em um arranjo de antenas não inteligentes, o uso de defasadores variáveis se torna essencial, definindo a defasagem individual para cada antena. A matriz de Butler, por outro lado, utiliza de defasadores fixos que diminuem a complexidade de implementação e um melhor resultado prático. Uma matriz de Butler \(N \times N\) possui N portas de entrada e N portas de saída, de forma que produz uma defasagem progressiva para as N portas de saída. Geralmente, o valor de N é uma potência de 2 \cite{bhowmik2017modelling}, mas existem aplicações que se utilizam de potências ímpares, porém o foco desse projeto será com N=4. 
+Atualmente, antenas estão presentes em diversas aplicações tecnológicas que dependem da transmissão/recepção de informações, desde redes sem fio até carros\cite{jose2025butler,sakhiya2023low}. De acordo com \citeonline{liu2019design}, uma das formas de superar perda de espaço livre e atenuação atmosférica em altas frequências é por meio de sistemas de antena inteligentes (\textit{Smart antennas}), que possibilitam a orientação dos feixes sem a movimentação física da antena. \textit{Smart antennas} são compostas por um \textit{array} (conjunto) de antenas que, ao formar multiplos feixes (\textit{multiple beam-forming}) com uma diferença de ângulo fixa, diminuem a probabilidade de interferência, sendo uma das redes de formação de feixes a matriz de Butler \cite{augusto2016butler, bhowmik2017modelling}. Em um arranjo de antenas não inteligentes, o uso de defasadores variáveis se torna essencial, definindo a defasagem individual para cada antena.
 
 
+A matriz de Butler, por outro lado, utiliza de defasadores fixos que diminuem a complexidade de implementação e um melhor resultado prático. Uma matriz de Butler \(N \times N\) possui N portas de entrada e N portas de saída, de forma que produz uma defasagem progressiva para as N portas de saída. Geralmente, o valor de N é uma potência de 2 \cite{bhowmik2017modelling}, mas existem aplicações que se utilizam de potências ímpares, porém o foco desse projeto será com N=4. 
 
-% ----------------------------------------------------------
+
+\chapter*[Metodologia]{Metodologia}
+
+Em uma implementação comum, utilizariam-se, na construção da matriz, os seguintes elementos na organização mostrada na figura \ref{fig:topologiaMatrizButlerComum}: 
+\begin{enumerate}
+  \item Acopladores de \(90^\circ\);
+  \item Defasadores de \(45^\circ\);
+  \item Defasadores de \(0^\circ\), ou \textit{Cross-overs}
+\end{enumerate}
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Topologia comum de uma matriz de Butler}
+    \label{fig:topologiaMatrizButlerComum}
+    \includegraphics[width=0.85\textwidth]{figures/matrizButlerComum.png}
+    \caption*{Fonte: \cite{sakhiya2023low}}
+  \end{center}
+\end{figure}
+
+Os elementos chamados \textit{cross-overs} servem para que seja possível cruzar os sinais entre duas linhas sem que eles sofram intereferências um do outro \cite{augusto2016butler}. Contudo, principalmente em matrizes onde o valor de N é elevado(número elevado de entradas e saídas), a construção se torna trabalhosa. 
+Portanto, a topologia final utilizada (figura \ref{fig:topologiaUtilizada}) permite a construção da matriz de Butler sem o uso de \textit{crossovers}, como demonstrado por \citeonline{adamidis2019design}. 
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Topologia de matriz de butler utilizada. }\label{fig:topologiaUtilizada}
+    \includegraphics[width=0.45\textwidth]{figures/topologiaUtilizada.png}
+    \caption*{Fonte: \cite{adamidis2019design}}
+  \end{center}
+\end{figure}
+
+Feita a matriz de Butler, serão feitas as quatro antenas de \textit{patch} retangular que serão alimentadas pela matriz de Butler.
+
+A validação se dará, primeiramente, por meio dos softwares ADS e Ansys HFSS. Validadas as dimensões de cada elemento, serão feitas, por meio de uma gravadora a laser, as placas de circuito impresso da matriz de Butler e das antenas.
+
+  % ----------------------------------------------------------
 % Objetivos
 % ---------------------------------------------------------
 \chapter*[Objetivos]{Objetivos}
@@ -300,26 +338,13 @@ O objetivo geral desse projeto consiste em implementar uma matriz de Butler 4x4 
 %----------------------------------------------------------
 % Capitulo de textual  
 % ----------------------------------------------------------
-\chapter{Elementos textuais}
+\chapter*[Resultados Esperados]{Resultados Esperados}
+Como resultado final, teremos uma matriz de Butler 4x4 funcional constituida de quatro acopladores híbridos de \(90^\circ\) e dois defasadores de \(45^\circ\), direcionando os feixes de entrada para um conjunto de antenas. 
 
+\iffalse
 \index{elementos textuais}A norma ABNT NBR 15287:2011, p. 5, apresenta a
 seguinte orientação quanto aos elementos textuais:
-
-\begin{citacao}
-O texto deve ser constituído de uma parte introdutória, na qual devem ser
-expostos o tema do projeto, o problema a ser abordado, a(s) hipótese(s),
-quando couber(em), bem como o(s) objetivo(s) a ser(em) atingido(s) e a(s)
-justificativa(s). É necessário que sejam indicados o referencial teórico que
-o embasa, a metodologia a ser utilizada, assim como os recursos e o cronograma
-necessários à sua consecução.
-\end{citacao}
-
-Consulte as demais normas da série ``Informação e documentação'' da ABNT
-para outras informações. Uma lista com as principais normas dessa série, todas
-observadas pelo \abnTeX, é apresentada em \citeonline{abntex2classe}.
-
-\cite{dewitt2005introduccao}
-
+\fi
 % ----------------------------------------------------------
 % Capitulo com exemplos de comandos inseridos de arquivo externo 
 % ----------------------------------------------------------
