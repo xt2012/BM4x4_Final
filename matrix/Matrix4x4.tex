@@ -67,6 +67,7 @@
 \usepackage{color}				% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{microtype} 			% para melhorias de justificação
+\usepackage{amsmath}
 % ---
 
 \usepackage{fancyhdr} %unb logo
@@ -306,6 +307,8 @@ Em uma implementação comum, utilizariam-se, na construção da matriz, os segu
 
 Os elementos chamados \textit{cross-overs} servem para que seja possível cruzar os sinais entre duas linhas sem que eles sofram intereferências um do outro \cite{augusto2016butler}. Contudo, principalmente em matrizes onde o valor de N é elevado(número elevado de entradas e saídas), a construção se torna trabalhosa. 
 Portanto, a topologia final utilizada (figura \ref{fig:topologiaUtilizada}) permite a construção da matriz de Butler sem o uso de \textit{crossovers}, como demonstrado por \citeonline{adamidis2019design}. 
+ 
+\newpage
 
 \begin{figure}[!h]
   \begin{center}
@@ -315,7 +318,13 @@ Portanto, a topologia final utilizada (figura \ref{fig:topologiaUtilizada}) perm
   \end{center}
 \end{figure}
 
-Feita a matriz de Butler, serão feitas as quatro antenas de \textit{patch} retangular que serão alimentadas pelos feixes gerados pela matriz de Butler.
+Feita a matriz de Butler, serão feitas as quatro antenas de \textit{patch} retangular que serão alimentadas pelos feixes gerados pela matriz de Butler. Como será feita a integração com as antenas, será possível observar uma defasagem progressiva entre as antenas dependendo de qual porta de entrada está sendo excitada. Essa diferença de fase $\phi_{p}$ entre as portas de saída pode ser calculada com a seguinte fórmula
+
+\begin{equation}\label{eq:defasagem}
+  \phi_{p}= \pm \frac{2p-1}{N} \cdot 180^\circ
+\end{equation}
+
+em que N=4, $p$=1,2,...,(n+1), n=2 para uma matriz de Butler 4x4.
 
 A validação se dará, primeiramente, por meio dos softwares ADS e Ansys HFSS. Validadas as dimensões de cada elemento, serão feitas, por meio de uma gravadora a laser, as placas de circuito impresso da matriz de Butler e das antenas.
 
@@ -351,6 +360,17 @@ Como resultado final, teremos uma matriz de Butler 4x4 funcional constituida de 
     \caption*{Fonte: Adaptado de \cite{adamidis2019design}) }
   \end{center}
 \end{figure}
+
+Além disso, como o sinal de entrada é dividido para quatro portas de saída, é esperado que para cada porta de saída alcance uma potência de $-6.021 \,\text{dB}$. Esse valor é o encontrado em simulações ideais com linhas de transmissão também ideais. Além disso, com base na fórmula \eqref{eq:defasagem}, buscamos encontrar as seguintes defasagens para as portas de saída
+\begin{align*}
+  p_{1} = \pm 45.00 ^\circ  \\
+  p_{2} = \pm 135.00 ^\circ
+\end{align*}
+
+
+
+
+
 
 \iffalse
 \index{elementos textuais}A norma ABNT NBR 15287:2011, p. 5, apresenta a
