@@ -33,8 +33,8 @@
 \documentclass[
 	% -- opções da classe memoir --
 	12pt,				% tamanho da fonte
-	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
-	twoside,			% para impressão em recto e verso. Oposto a oneside
+	%openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	oneside,			% para impressão em recto e verso. Oposto a oneside
 	a4paper,			% tamanho do papel. 
 	% -- opções da classe abntex2 --
 	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
@@ -58,7 +58,8 @@
 % ---
 
 \usepackage{caption} %Para ter uma caption sem referência a imagem(Figura x - descrição, apenas: descrição)
-
+\usepackage{tabularx} % Para ajuste automático da largura das colunas
+\usepackage{booktabs} % Para linhas de tabela com melhor acabamento
 
 \usepackage{lmodern}			% Usa a fonte Latin Modern
 \usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
@@ -220,10 +221,7 @@
 \imprimirfolhaderosto
 % ---
 
-% ---
-% NOTA DA ABNT NBR 15287:2011, p. 4:
-%  ``Se exigido pela entidade, apresentar os dados curriculares do autor em
-%     folha ou página distinta após a folha de rosto.''
+% --- NOTA DA ABNT NBR 15287:2011, p. 4: ``Se exigido pela entidade, apresentar os dados curriculares do autor em folha ou página distinta após a folha de rosto.''
 % ---
 
 % ---
@@ -240,20 +238,24 @@
 \pdfbookmark[0]{\listtablename}{lot}
 \listoftables*
 \cleardoublepage
+
 % ---
 
 % ---
 % inserir lista de abreviaturas e siglas
 % ---
+\iffalse
 \begin{siglas}
   \item[ABNT] Associação Brasileira de Normas Técnicas
   \item[abnTeX] ABsurdas Normas para TeX
 \end{siglas}
 % ---
+\fi
 
 % ---
 % inserir lista de símbolos
 % ---
+\iffalse
 \begin{simbolos}
   \item[$ \Gamma $] Letra grega Gama
   \item[$ \Lambda $] Lambda
@@ -261,6 +263,7 @@
   \item[$ \in $] Pertence
 \end{simbolos}
 % ---
+\fi
 
 % ---
 % inserir o sumario
@@ -348,6 +351,32 @@ O objetivo geral desse projeto consiste em implementar uma matriz de Butler 4x4 
 %----------------------------------------------------------
 % Capitulo de textual  
 % ----------------------------------------------------------
+
+\chapter*[Cronograma]{Cronograma}
+\addcontentsline{toc}{chapter}{Cronograma}
+
+Na tabela \ref{table:cronograma}, encontra-se o cronograma de atividades a serem realizadas:
+
+\begin{table}[h]
+\centering
+\caption{Cronograma de Entregas do Projeto}
+\label{table:cronograma}
+\begin{tabularx}{\textwidth}{|c|c|X|c|}
+\hline
+ \textbf{Período} & \textbf{Fase} & \textbf{Atividades} \\ \hline
+ 06/04 -- 16/04 & Planejamento & Definição da topologia da matriz \\ \hline
+ 17/04 -- 24/04 & Esquemático & Desenvolvimento do esquemático e simulação do acoplador;\\ \hline
+ 25/04 -- 09/05 & Esquemático & Desenvolvimento do esquemático da matriz/integração com o acoplador; \\ \hline
+ 10/05 -- 17/05 & Esquemático & Desenvolvimento do esquemático das antenas/integração com a matriz; \\ \hline
+ 18/05 -- 01/06 & Simulação e Otimização & Simulação e otimização da Matriz e das antenas; \\ \hline
+ 02/06 -- 16/06 & Fabricação & Fabricação dos circuitos; \\ \hline
+ 17/06 -- 30/06 & Teste, Validação e Entrega& Testes de transmissão da matriz e das antenas\\ \hline
+\end{tabularx}
+\end{table}
+
+
+
+
 \chapter*[Resultados Esperados]{Resultados Esperados}
 \addcontentsline{toc}{chapter}{Resultados Esperados}
 
