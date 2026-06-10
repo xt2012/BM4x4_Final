@@ -69,6 +69,8 @@
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{microtype} 			% para melhorias de justificação
 \usepackage{amsmath}
+\usepackage{booktabs} % Essencial para tabelas com aspeto profissional
+
 % ---
 
 \usepackage{fancyhdr} %unb logo
@@ -282,7 +284,7 @@
 % ----------------------------------------------------------
 % Introdução
 % ----------------------------------------------------------
-\chapter*[Introdução]{Introdução}
+\chapter[Introdução]{Introdução}
 
 \addcontentsline{toc}{chapter}{Introdução}
 Atualmente, antenas estão presentes em diversas aplicações tecnológicas que dependem da transmissão/recepção de informações, desde redes sem fio até carros\cite{jose2025butler,sakhiya2023low}. De acordo com \citeonline{liu2019design}, uma das formas de superar perda de espaço livre e atenuação atmosférica em altas frequências é por meio de sistemas de antena inteligentes (\textit{Smart antennas}), que possibilitam a orientação dos feixes sem a movimentação física da antena. \textit{Smart antennas} são compostas por um \textit{array} (conjunto) de antenas que, ao formar multiplos feixes (\textit{multiple beam-forming}) com uma diferença de ângulo fixa, diminuem a probabilidade de interferência, sendo uma das redes de formação de feixes a matriz de Butler \cite{augusto2016butler, bhowmik2017modelling}. Em um arranjo de antenas não inteligentes, o uso de defasadores variáveis se torna essencial, definindo a defasagem individual para cada antena.
@@ -291,7 +293,7 @@ Atualmente, antenas estão presentes em diversas aplicações tecnológicas que 
 A matriz de Butler, por outro lado, utiliza de defasadores fixos que diminuem a complexidade de implementação e um melhor resultado prático. Uma matriz de Butler \(N \times N\) possui N portas de entrada e N portas de saída, de forma que produz uma defasagem progressiva para as N portas de saída. Geralmente, o valor de N é uma potência de 2 \cite{bhowmik2017modelling}, mas existem aplicações que se utilizam de potências ímpares, porém o foco desse projeto será com N=4. 
 
 
-\chapter*[Metodologia]{Metodologia}
+\chapter[Metodologia]{Metodologia}
 
 Em uma implementação comum, utilizariam-se, na construção da matriz, os seguintes elementos na organização mostrada na figura \ref{fig:topologiaMatrizButlerComum}: 
 \begin{enumerate}
@@ -334,14 +336,14 @@ A validação se dará, primeiramente, por meio dos softwares ADS e Ansys HFSS. 
   % ----------------------------------------------------------
 % Objetivos
 % ---------------------------------------------------------
-\chapter*[Objetivos]{Objetivos}
+\chapter[Objetivos]{Objetivos}
 \addcontentsline{toc}{chapter}{Objetivos}
 
-\section*{Objetivo Geral}
+\section{Objetivo Geral}
 O objetivo geral desse projeto consiste em implementar uma matriz de Butler 4x4 com um conjunto de antenas impressas na faixa de 2.4 GHz. Como resultado, será possível obter um arranjo de antenas capaz de realizar o direcionamento de feixes em ângulos específicos.
 
 
-\section*{Objetivos específicos}
+\section{Objetivos específicos}
 \begin{enumerate}
 	\item Projetar uma matriz de Butler 4x4 com 4 entradas e 4 saídas na frequência de 2.4 GHz;
 	\item Projetar e validar os elementos individuais que formam a matriz de Butler, sendo eles os acopladores e os defasadores;
@@ -352,7 +354,7 @@ O objetivo geral desse projeto consiste em implementar uma matriz de Butler 4x4 
 % Capitulo de textual  
 % ----------------------------------------------------------
 
-\chapter*[Cronograma]{Cronograma}
+\chapter[Cronograma]{Cronograma}
 \addcontentsline{toc}{chapter}{Cronograma}
 
 Na tabela \ref{table:cronograma}, encontra-se o cronograma de atividades a serem realizadas:
@@ -377,7 +379,7 @@ Na tabela \ref{table:cronograma}, encontra-se o cronograma de atividades a serem
 
 
 
-\chapter*[Resultados Esperados]{Resultados Esperados}
+\chapter[Resultados Esperados]{Resultados Esperados}
 \addcontentsline{toc}{chapter}{Resultados Esperados}
 
 Como resultado final, teremos uma matriz de Butler 4x4 funcional constituida de quatro acopladores híbridos de \(90^\circ\) e dois defasadores de \(45^\circ\), direcionando os feixes de entrada para um conjunto de 4 antenas \textit{rectangular patch}, como mostra a figura \ref{fig:resultadoFinal}
@@ -397,14 +399,220 @@ Além disso, como o sinal de entrada é dividido para quatro portas de saída, �
 \end{align*}
 
 
+\chapter[Resultados e Discussões]{Resultados e Discussões}
+\section{Acoplador Hibrido Em Quadratura}
+Começamos com o acoplador híbrido com linhas ideais, tendo em mente os valores de impedância e comprimento elétrico das linhas.
+
+\begin{figure}[!h]
+    \centering
+
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \caption{Acoplador ideal}\label{fig:idealSchematic}
+        \includegraphics[width=1.0\textwidth]{figures/coupler/idealSchematic.png}
+        \caption*{Fonte: Elaborado pelos autores. }
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \caption{Resultados do acoplador ideal}\label{fig:idealResults}
+        \includegraphics[width=1\textwidth]{figures/coupler/idealResults.png}
+        \caption*{Fonte: Elaborado pelos autores. }
+    \end{minipage}
+
+\end{figure}
+
+ 
 
 
+Ao analisar os resultados(figura \ref{fig:idealResults}), observa-se valores ideais de perda de retorno(todas abaixo de $-40dB$), isolamento entre as portas de entrada e saída(todos abaixo de $-40dB$),  transmissão das entradas para saída(exatamente $-3dB$) e fase($90^{\circ}$).
 
 
-\iffalse
-\index{elementos textuais}A norma ABNT NBR 15287:2011, p. 5, apresenta a
-seguinte orientação quanto aos elementos textuais:
-\fi
+Para o esquemático não ideal, foram definidos parâmetros para as dimensões das linhas de transmissão(figura \ref{fig:parametersSchematic1}) baseadas nos cálculos realizados pela ferramenta \textit{LineCalc} tendo em vista o substrato FR4 com tangente de perdas$(tan\delta)$ de $0.02$ e constante dielétrica$(\epsilon_r)$ de $3.97$; espessura do cobre de $18\mu m$, as impedâncias características das linhas e comprimentos elétricos.
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Parâmetros utilizados no esquemático não ideal}\label{fig:parametersSchematic1}
+    \includegraphics[width=0.25\textwidth]{figures/coupler/parametersSchematic1.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure}
+
+  As variáveis lv e lh linhas foram parametrizadas tendo em vista as outras medidas de forma que os comprimentos totais fossem iguais a $\lambda/4$($l_{qw})$.   
+  
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Dimensões e parametrizações de lv e lh}\label{}
+    \includegraphics[width=1\textwidth]{figures/pozarHybrid.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure}
+
+Observamos que 
+\begin{equation*}
+  l_{qw}=l_v+\frac{w_{50}}{2}+\frac{w_{50}}{2}
+\end{equation*}
+
+\begin{equation*}
+  l_{qw}=l_v+w_{50}
+\end{equation*}
+
+portanto:
+
+\begin{equation}
+  l_{v}=l_{qw}-w_{50}
+\end{equation}
+
+Também, observa-se que: 
+
+\begin{equation*}
+  l_{qw}=l_h+\frac{w_v}{2}+\frac{w_v}{2}
+\end{equation*}
+
+Mas, no esquemático feito, no início e no fim da linha $l_h$(que possui largura $w_h$) existem dois \textit{tapers} de comprimento $l_{taper}$ para se ter uma transição suave vindo das linhas laterais(de largura $w_{v}$). 
+
+Levando em conta os tapers:
+
+\begin{equation*}
+  l_{qw}=l_h+\frac{w_v}{2}+\frac{w_v}{2}+2l_{taper}
+\end{equation*}
+
+Além dos \textit{tapers}, existem duas linhas adicionais que saem do s elementos de junção MTEE e extendem verticalmente de comprimento $l_{vCorner}$ e largura $w_{vCorner}$. Levando-os em conta:
+
+\begin{equation*}
+  l_{qw}=l_h+\frac{w_{vCorner}}{2}+\frac{w_{vCorner}}{2}+2l_{taper}
+\end{equation*}
+
+Dessa forma:
+
+\begin{equation}
+  l_{h}=l_{qw}-w_{vCorner}-2l_{taper}
+\end{equation}
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Esquemático não ideal com parametrização}\label{}
+    \includegraphics[width=1\textwidth]{figures/coupler/nonIdealSchematic.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure}
+
+Após otimizar os parâmetros por meio do \textit{Tuning}, com excessão de $l_{50}$, $w_{50}$, $l_{v}$ e $l_{h}$, simulando de 1GHz até 4GHz com um passo de 0.5MHz obtem-se os gráficos:
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Resultados do acoplador não ideal otimizado}\label{}
+    \includegraphics[width=0.5\textwidth]{figures/coupler/nonidealResults.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure}
+
+
+Substituindo as terminações por portas, pode-se gerar o layout inicial não otimizado eletromagnéticamente:
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Layout do acoplador não otimizado eletromagnéticamente}\label{}
+    \includegraphics[width=0.5\textwidth]{figures/coupler/couplerLayoutNonOPT.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure}
+
+Como já mencionado, o substrato utilizado será FR4 com uma espessura de 1.6mm e $18\mu m$ de espessura de cobre. Portanto, assim foi definido na interface eletromagnética.
+
+\begin{figure}[!h]
+    \centering
+
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \caption{Visualização da Stackup}\label{fig:idealSchematic}
+        \includegraphics[width=1.0\textwidth]{figures/stackup.png}
+        \caption*{Fonte: Elaborado pelos autores. }
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \caption{Definição da Stackup}\label{fig:idealResults}
+        \includegraphics[width=1\textwidth]{figures/stackup2.png}
+        \caption*{Fonte: Elaborado pelos autores. }
+    \end{minipage}
+
+\end{figure}
+
+Portanto, com um \textit{EMSetup} com um \textit{Frequency Plan} de 1GHz até 3GHz com 50 pontos, obtem-se os gráficos:
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Resultados do layout do acoplador não otimizado}\label{}
+    \includegraphics[width=0.8\textwidth]{figures/coupler/layoutNonOptmResults.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure}
+
+Percebe-se que os vales para os parâmetros indicativos de perda de retorno e de isolamento($S_{11}, S_{22}, S_{33}, S_{44}, S_{31} \text{ e } S_{44}$) estão todos deslocados para além de 2.4GHz. Além disso, o ponto de $-3dB$ dos parâmetros de transmissão($S_{21} \text{ e } S_{41}$) também está para mais de 2.4GHz. Podemos, dessa forma, otimizar buscando deslocar estes pontos para $2.4GHz$.
+
+Para tal, o layout foi parametrizado novamente por meio da interface eletromagnética para a criação do símbulo. Com o símbulo criado e instanciado em um novo esquemático, foram criados 7 \textit{Parameter Sweep}'s para otimização eletromagnética das variáveis $l_{qw},l_{vCorner},w_h,w_v \text{ e } w_{vCorner}$. 
+
+Observado os gráficos gerados por cada \textit{Parameter Sweep} e ajustando os valores das variáveis, é obtido finalmente o conjunto de parâmetros ótimo:
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Parâmetros otimizados para simulação eletromagnética.}\label{}
+    \includegraphics[width=0.3\textwidth]{figures/coupler/EMOptParams.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure}
+
+Utilizando os valores ótimos no esquemático obtemos os gráficos para o layout otimizado. 
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Resultados do layout do acoplador otimizado}\label{}
+    \includegraphics[width=0.8\textwidth]{figures/coupler/layoutOptmResults.png}
+    \caption*{Fonte: Elaborado pelos autores.}
+  \end{center}
+\end{figure}
+ 
+Para a perda de inserção, todos os valores foram melhorados. A tabela \ref{tab:comparacao_acoplador} mostra uma comparação.
+
+\begin{table}[!h]
+\centering
+\caption{Comparação dos parâmetros de espalhamento ($S$) entre as simulações não otimizada e otimizada do acoplador.}
+\label{tab:comparacao_acoplador}
+\vspace{0.2cm}
+\resizebox{\textwidth}{!}{%
+    \begin{tabular}{l c c l}
+    \toprule
+    \textbf{Parâmetro S} & \textbf{Simulação Não Otimizada (dB)} & \textbf{Simulação Otimizada (dB)} \\
+    \midrule
+    $S_{11}$ (Reflexão Porta 1) & -20.91 & -26.93 \\
+    $S_{22}$ (Reflexão Porta 2) & -18.57 & -23.45 \\
+    $S_{33}$ (Reflexão Porta 3) & -18.23 & -22.59 \\
+    $S_{44}$ (Reflexão Porta 4) & -20.23 & -25.08 \\
+    \midrule
+    $S_{31}$ (Isolamento)       & -20.56 & -25.69 \\
+    $S_{24}$ (Isolamento)       & -20.63 & -25.82 \\
+    \midrule
+    $S_{21}$ (Transmissão)      & -3.51  & -3.27  \\
+    $S_{41}$ (Transmissão)      & -3.00  & -3.12  \\
+    \midrule
+    Fase & $90.08^{\circ}$  & $90.71^{\circ}$  \\    
+    \bottomrule
+    \end{tabular}%
+}
+\end{table}
+
+Apenas a fase apresentou uma leve piora, mas em uma escala de grandeza desprezível. 
+
+Gerando o layout com os valores, obtemos o layout final do acoplador híbrido:
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Layout do acoplador otimizado eletromagnéticamente}\label{}
+    \includegraphics[width=0.5\textwidth]{figures/coupler/couplerLayoutOPT.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
 % ----------------------------------------------------------
 % Capitulo com exemplos de comandos inseridos de arquivo externo 
 % ----------------------------------------------------------
