@@ -127,7 +127,7 @@
 \tipotrabalho{Trabalho Final}
 % O preambulo deve conter o tipo do trabalho, o objetivo, 
 % o nome da instituição e a área de concentração 
-\preambulo{Trabalho final de Tópicos Especiais em Eletrônica implementando uma Matrix de Butler 4x4 na faixa de 2.4 GHz para formação de feixes direcionados.}
+\preambulo{Trabalho final de Tópicos Especiais em Eletrônica implementando uma Matriz de Butler 4x4 na faixa de 2.4 GHz para formação de feixes direcionados.}
 % ---
 
 % ---
@@ -613,6 +613,140 @@ Gerando o layout com os valores, obtemos o layout final do acoplador híbrido:
     \caption*{Fonte: Elaborado pelos autores. }
   \end{center}
 \end{figure} 
+
+\newpage
+
+\section{Matriz de Butler 4x4}
+Para desenvolver a matriz de Butler 4x4 completa com a topologia apresentada pela figura (figura \ref{fig:topologiaUtilizada}), é necessário a replicação dos acopladores híbridos em quadratura de uma forma específica. O procedimento utilizado foi semelhante ao processo de otimizar eletromagnéticamente o esquemático acoplador híbrido e consiste em criar um sub-componente para não ser preciso replicar o mesmo componente inúmeras vezes, o que torna o esquemático final bastante poluído.
+
+Além disso, como se pode notar na figura (figura \ref{fig:topologiaUtilizada}), existem curvas que ligam os acopladores e que contribuem com as defasagens esperadas para a matriz completa. Para essas curvas, foi utilizado o componente MCURVE.
+
+Com isso, o esquemático da matriz de Butler 4x4 ficou da seguinte forma:
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Esquemático da matriz completa}\label{}
+    \includegraphics[width=0.8\textwidth]{figures/matrix/esquematico_matrix.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+\newpage
+
+Os parâmetros, incluindo as dimensões dos componentes, intervalo de simulação e características do substrato são:
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Parâmetros componentes, simulação e substrato}\label{}
+    \includegraphics[width=0.4\textwidth]{figures/matrix/parametros_matrix.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+Uma vez com o esquemático pronto, foi feita a simulação de parâmetros S no intervalo de frequência desejado. Como mencionado anteriormente que é esperado defasagens específicas entre as portas dependendo de qual porta de entrada está sendo excitada, será preciso obter um gráfico para caso.
+
+Para começar, podemos analisar o resultado de perda de retorno (\textit{Return loss}) para cada porta de entrada e também o isolamento entre uma porta e outra.
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Resultado simulação para retorn loss e isolamento}\label{}
+    \includegraphics[width=0.6\textwidth]{figures/matrix/returnloss_isolamento.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+Como é possível observar, para todas as portas de entrada, obteve-se uma excelente perda de retorno com valores abaixo de -20\,dB, um número bastante aceitável. Para o isolamente entre as portas, pode-se observar que foi encontrado resultado semelhante, corroborando com a teoria de que ao excitar uma porta, as outras devem permanecer isoladas dessa.
+
+\newpage
+
+Uma vez analisado os valores de perda de retorno e isolamento e obtendo os resultados desejados, a análise de fase entre os sinais de saída pode ser feita. Como visto anteriormente, a característica principal de uma matriz de Butler 4x4 é de, com um sinal de entrada, dividi-lo em quatro outros sinais de saída que possuem uma defasagem uniforme entre si. Essa defasagem é obtida atráves do cálculo da equação \eqref{eq:defasagem}, e após realizar esse cálculo, obtém-se as seguintes defasagens: $\pm 45^\circ$ e $\pm135^\circ$, de forma que esses valores são esperados nos resultados da simulações. 
+
+\vspace{2cm}
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Análise de fase quando porta 1 é excitada}\label{}
+    \includegraphics[width=0.7\textwidth]{figures/matrix/magnitude_fase_1.png}
+    \caption*{Fonte: Elaborado pelos autores.}
+  \end{center}
+\end{figure} 
+
+Começando com a análise de fase quando a porta 1 é excitada, é possível observar que o valor em decibéis para a potência de saida para cada porta está no valor esperado de aproximadamente -6\,dB, o que equivale a divisão do sinal de entrada por quatro. Já na análise de fase, é possível notar que todos os sinais de saída possuem uma defasagem de aproximadamente $135^\circ$, o que representa um valor esperado dentre as quatro possibilidades de defasagem.
+
+\newpage
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Análise de fase quando porta 2 é excitada}\label{}
+    \includegraphics[width=0.7\textwidth]{figures/matrix/magnitude_fase_2.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+Partindo para a análise quando a porta 2 é excitada, é possível observar bons resultados para os valores de potência de saída, todos em -6\,dB. Para a análise de fase, as portas de saída estão com uma defasagem de aproximadamente $45^\circ$, também dentro das possibilidades.
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Análise de fase quando porta 3 é excitada}\label{}
+    \includegraphics[width=0.7\textwidth]{figures/matrix/magnitude_fase_3.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+Partindo para a análise quando a porta 3 é excitada, é possível observar que também atingiu bons resultados para os valores de potência de saída, todos em -6\,dB. Para a análise de fase, as portas de saída estão com uma defasagem de aproximadamente $-45^\circ$.
+
+\newpage
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Análise de fase quando porta 4 é excitada}\label{}
+    \includegraphics[width=0.7\textwidth]{figures/matrix/magnitude_fase_4.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+Por fim, para a análise quando a porta 4 é excitada, é possível observar que excelentes resultados para os valores de potência de saída, todos em -6\,dB. Para a análise de fase, as portas de saída estão com uma defasagem de aproximadamente $-135^\circ$.
+
+Logo, é possível concluir que todos os resultados após o desenvolvimento real do projeto teórico foram alcançados com sucesso, de forma que atende todos os requisitos do projeto.
+
+Para ficar mais claro o entendimento dessas defasagens entre as portas de saída e poder relacionar com o objetivo da matriz de Butler, que é o direcionamento de feixes, foi desenvolvido um código em pyton que gera um gráfico mostrando a ângulação que o sinal possui dependendo de qual porta de entrada é excitada.
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Gráfico com angulações a depender da defasagem}\label{}
+    \includegraphics[width=0.6\textwidth]{figures/matrix/angulacoes_saida.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+Como é possível observar, existem quatro direções possível de direcionamento dos feixes.
+
+\newpage
+
+\section{Antena \textit{patch} retangulare}
+
+Para desenvolver um projeto que possa ser utilizado, foi projetado também um modelo de antena retangular do tipo \textit{patch} para integrar na matriz de Butler. O projeto dessa antena foi feito no software de desenvolvimento chamado \textit{Ansys Eletronic Suite}.
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Projeto da antena retangular \textit{patch}}\label{}
+    \includegraphics[width=0.6\textwidth]{figures/matrix/antena.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Resultado da simulação da antena}\label{}
+    \includegraphics[width=0.6\textwidth]{figures/matrix/simulaçao_antena.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+Como é possível observar, a antena possui excelentes valores de transmissão, sendo possível ainda a sua otimização para a integração final com a matriz de Butler completa.
+
+
+
 % ----------------------------------------------------------
 % Capitulo com exemplos de comandos inseridos de arquivo externo 
 % ----------------------------------------------------------
