@@ -53,6 +53,7 @@
 % ---
 \usepackage{fancyhdr}
 \usepackage{graphicx}
+\usepackage{float}
 % ---
 % Pacotes fundamentais 
 % ---
@@ -617,6 +618,7 @@ Gerando o layout com os valores, obtemos o layout final do acoplador híbrido:
 \newpage
 
 \section{Matriz de Butler 4x4}
+\subsection{ADS}
 Para desenvolver a matriz de Butler 4x4 completa com a topologia apresentada pela figura (figura \ref{fig:topologiaUtilizada}), é necessário a replicação dos acopladores híbridos em quadratura de uma forma específica. O procedimento utilizado foi semelhante ao processo de otimizar eletromagnéticamente o esquemático acoplador híbrido e consiste em criar um sub-componente para não ser preciso replicar o mesmo componente inúmeras vezes, o que torna o esquemático final bastante poluído.
 
 Além disso, como se pode notar na figura (figura \ref{fig:topologiaUtilizada}), existem curvas que ligam os acopladores e que contribuem com as defasagens esperadas para a matriz completa. Para essas curvas, foi utilizado o componente MCURVE.
@@ -649,7 +651,7 @@ Para começar, podemos analisar o resultado de perda de retorno (\textit{Return 
 
 \begin{figure}[!h]
   \begin{center}
-    \caption{Resultado simulação para retorn loss e isolamento}\label{}
+    \caption{Resultado simulação para retorn loss e isolamento (esquemático ADS)}\label{}
     \includegraphics[width=0.6\textwidth]{figures/matrix/returnloss_isolamento.png}
     \caption*{Fonte: Elaborado pelos autores. }
   \end{center}
@@ -721,13 +723,228 @@ Para ficar mais claro o entendimento dessas defasagens entre as portas de saída
 
 Como é possível observar, existem quatro direções possível de direcionamento dos feixes.
 
+
+Para otimização eletromagnética, foi gerado o símbulo do layout físico parametrizado:
+
+ \begin{figure}[!h]
+  \begin{center}
+    \caption{Layout EM da matriz}\label{}
+    \includegraphics[width=0.7\textwidth]{figures/matrix/esquematico_matrix_EM.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+Por meio de \textit{Parameter Sweeps}, o layout eletromagnético foi otimizado.
+
+Para começar, podemos analisar o resultado de perda de retorno (\textit{Return loss}) para cada porta de entrada e também o isolamento entre uma porta e outra.
+
+\begin{figure}[H]
+  \begin{center}
+    \caption{Resultado simulação para retorn loss e isolamento(ADS)}\label{}
+    \includegraphics[width=0.6\textwidth]{figures/matrix/finalResultsADS/returnloss_isolamento.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+Como é possível observar, para todas as portas de entrada, obteve-se uma excelente perda de retorno com valores abaixo de -18\,dB, um número bastante aceitável. Para o isolamente entre as portas, obtemos um isolamento mínimo de -20dB.
+ 
+\begin{figure}[H]
+  \begin{center}
+    \caption{Análise de fase quando porta 1 é excitada}\label{}
+    \includegraphics[width=0.7\textwidth]{figures/matrix/finalResultsADS/magnitude_fase_1.png}
+    \caption*{Fonte: Elaborado pelos autores.}
+  \end{center}
+\end{figure} 
+
+
+Para a análise de fase quando a porta 1 é excitada, é possível observar que o valor em decibéis para a potência de saida para cada porta está no valor esperado de aproximadamente -6\,dB, o que equivale a divisão do sinal de entrada por quatro. Já na análise de fase, é possível notar que todos os sinais de saída possuem uma defasagem de aproximadamente $-45^\circ$, o que representa um valor esperado dentre as quatro possibilidades de defasagem.
+ 
+
+Partindo para a análise quando a porta 2 é excitada, é possível observar bons resultados para os valores de potência de saída, todos em -6\,dB. Para a análise de fase, as portas de saída estão com uma defasagem de aproximadamente $-135^\circ$, também dentro das possibilidades.
+
+\begin{figure}[H]
+  \begin{center}
+    \caption{Análise de fase quando porta 2 é excitada}\label{}
+    \includegraphics[width=0.7\textwidth]{figures/matrix/finalResultsADS/magnitude_fase_2.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+
+Partindo para a análise quando a porta 3 é excitada, é possível observar que também atingiu bons resultados para os valores de potência de saída, todos em -6\,dB. Para a análise de fase, as portas de saída estão com uma defasagem de aproximadamente $135^\circ$.
+
+
+\begin{figure}[H]
+  \begin{center}
+    \caption{Análise de fase quando porta 3 é excitada}\label{}
+    \includegraphics[width=0.7\textwidth]{figures/matrix/finalResultsADS/magnitude_fase_3.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+Para a análise quando a porta 4 é excitada, é possível observar que também atingiu bons resultados para os valores de potência de saída, todos em -6\,dB. Para a análise de fase, as portas de saída estão com uma defasagem de aproximadamente $45^\circ$.
+
+\begin{figure}[H]
+  \begin{center}
+    \caption{Análise de fase quando porta 4 é excitada}\label{}
+    \includegraphics[width=0.7\textwidth]{figures/matrix/finalResultsADS/magnitude_fase_4.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+
 \newpage
 
-\section{Antena \textit{patch} retangulare}
+\subsection{HFSS}
+
+O acoplador foi parametrizado de forma similar ao acoplador feito no ADS, buscando manter os resultados iguais.
+
+\begin{figure}[H]
+  \begin{center}
+    \caption{Acoplador no HFSS}\label{}
+    \includegraphics[width=0.4\textwidth]{figures/matrizHFSS/coupler/coupler.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+Os resultados obtidos para casamento, transmissão e fase são vistos nas imagens abaixo:
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Casamento - acoplador otimizado (HFSS)}\label{}
+    \includegraphics[width=0.7\textwidth]{figures/matrizHFSS/coupler/matching.png}
+    \caption*{Fonte: Elaborado pelos autores.}
+  \end{center}
+\end{figure}
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Transmissão - acoplador otimizado (HFSS)}\label{}
+    \includegraphics[width=0.7\textwidth]{figures/matrizHFSS/coupler/transmission.png}
+    \caption*{Fonte: Elaborado pelos autores.}
+  \end{center}
+\end{figure}
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Fases - acoplador otimizado (HFSS)}\label{}
+    \includegraphics[width=0.7\textwidth]{figures/matrizHFSS/coupler/phase.png}
+    \caption*{Fonte: Elaborado pelos autores.}
+  \end{center}
+\end{figure}
+
+O casamento observado foi de menos de -20dB. Tranmissão se manteve em -3.5dB e, finalmente, fase em $87.31^{\circ}$. Otimizado o acoplador, passa-se para a matriz.
+
+
+\begin{figure}[!h]
+  \begin{center}
+    \caption{Matriz no HFSS}\label{}
+    \includegraphics[width=0.7\textwidth]{figures/matrizHFSS/matriz.png}
+    \caption*{Fonte: Elaborado pelos autores.}
+  \end{center}
+\end{figure}
+
+
+
+
+
+\begin{figure}[H]
+  \begin{center}
+    \caption{Resultado simulação para retorn loss e isolamento(HFSS)}\label{}
+    \includegraphics[width=0.9\textwidth]{figures/matrizHFSS/matching.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+Para todas as portas de entrada, obteve-se uma perda de retorno com valores abaixo de -20\,dB.
+
+Quando a porta 1 é excitada, obtemos uma defasagem próxima de $135^{\circ}$.
+\begin{figure}[H]
+  \begin{center}
+    \caption{Análise de fase quando porta 1 é excitada(HFSS)}\label{}
+    \includegraphics[width=0.9\textwidth]{figures/matrizHFSS/phases1.png}
+    \caption*{Fonte: Elaborado pelos autores.}
+  \end{center}
+\end{figure} 
+
+
+Quando a porta 2 é excitada, obtemos uma defasagem próxima de $45^{\circ}$.
+\begin{figure}[H]
+  \begin{center}
+    \caption{Análise de fase quando porta 2 é excitada(HFSS)}\label{}
+    \includegraphics[width=0.9\textwidth]{figures/matrizHFSS/phases2.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+ 
+Quando a porta 3 é excitada, obtemos uma defasagem próxima de $-45^{\circ}$.
+\begin{figure}[H]
+  \begin{center}
+    \caption{Análise de fase quando porta 3 é excitada(HFSS)}\label{}
+    \includegraphics[width=0.9\textwidth]{figures/matrizHFSS/phases3.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+
+ 
+Quando a porta 4 é excitada, obtemos uma defasagem próxima de $-135^{\circ}$.
+
+\begin{figure}[H]
+  \begin{center}
+    \caption{Análise de fase quando porta 4 é excitada(HFSS)}\label{}
+    \includegraphics[width=0.9\textwidth]{figures/matrizHFSS/phases4.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
+ 
+Baseado na tabela da figura \ref{fig:tabelaAdamidis}, podemos comparar as defasagens obtidas com o esperado:
+
+\begin{figure}[H]
+  \begin{center}
+    \caption{Defasagens esperadas.}\label{fig:tabelaAdamidis}
+    \includegraphics[width=0.5\textwidth]{figures/matrizHFSS/image.png}
+    \caption*{Fonte: \cite{adamidis2019design} }
+  \end{center}
+\end{figure} 
+ 
+
+\begin{table}[htbp]
+\centering
+\caption{Comparação entre as defasagens teóricas esperadas e as medidas por simulação (HFSS) em $2.40GHz$.}
+\label{tab:comparacao_defasagens}
+\small
+\begin{tabular}{ccccc}
+\toprule
+\textbf{Porta de Entrada} & \textbf{Esperado} & \textbf{Medido (HFSS)}  \\ \midrule
+% PORTA 1
+                     & $\phi_{6,1}-\phi_{5,1}$ & $135^\circ$ & $137,32^\circ$ \\
+\textbf{Porta 1}     & $\phi_{7,1}-\phi_{6,1}$ & $135^\circ$ & $135,25^\circ$ \\
+                     & $\phi_{8,1}-\phi_{7,1}$ & $135^\circ$ & $134,63^\circ$ \\ \midrule
+% PORTA 2
+                     & $\phi_{6,2}-\phi_{5,2}$ & $45^\circ$  & $41,52^\circ$  \\
+\textbf{Porta 2}     & $\phi_{7,2}-\phi_{6,2}$ & $45^\circ$  & $47,69^\circ$  \\
+                     & $\phi_{8,2}-\phi_{7,2}$ & $45^\circ$  & $39,71^\circ$  \\ \midrule
+% PORTA 3
+                     & $\phi_{6,3}-\phi_{5,3}$ & $-45^\circ$ & $-40,05^\circ$ \\
+\textbf{Porta 3}     & $\phi_{7,3}-\phi_{6,3}$ & $-45^\circ$ & $-47,85^\circ$ \\
+                     & $\phi_{8,3}-\phi_{7,3}$ & $-45^\circ$ & $-42,11^\circ$ \\ \midrule
+% PORTA 4
+                     & $\phi_{6,4}-\phi_{5,4}$ & $-135^\circ$ & $-135,24^\circ$ \\
+\textbf{Porta 4}     & $\phi_{7,4}-\phi_{6,4}$ & $-135^\circ$ & $-135,30^\circ$ \\
+                     & $\phi_{8,4}-\phi_{7,4}$ & $-135^\circ$ & $-137,83^\circ$ \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+\newpage
+
+\section{Antena \textit{patch} retangular}
 
 Para desenvolver um projeto que possa ser utilizado, foi projetado também um modelo de antena retangular do tipo \textit{patch} para integrar na matriz de Butler. O projeto dessa antena foi feito no software de desenvolvimento chamado \textit{Ansys Eletronic Suite}.
 
-\begin{figure}[!h]
+\begin{figure}[H]
   \begin{center}
     \caption{Projeto da antena retangular \textit{patch}}\label{}
     \includegraphics[width=0.6\textwidth]{figures/matrix/antena.png}
@@ -735,7 +952,7 @@ Para desenvolver um projeto que possa ser utilizado, foi projetado também um mo
   \end{center}
 \end{figure} 
 
-\begin{figure}[!h]
+\begin{figure}[H]
   \begin{center}
     \caption{Resultado da simulação da antena}\label{}
     \includegraphics[width=0.6\textwidth]{figures/matrix/simulaçao_antena.png}
@@ -745,7 +962,18 @@ Para desenvolver um projeto que possa ser utilizado, foi projetado também um mo
 
 Como é possível observar, a antena possui excelentes valores de transmissão, sendo possível ainda a sua otimização para a integração final com a matriz de Butler completa.
 
+\newpage
 
+
+\section{Integração}
+Integrando as antenas com os conectores utilizados do tipo SMA, obtemos:
+\begin{figure}[H]
+  \begin{center}
+    \caption{Integração da matriz com as antenas e os conectores.}\label{}
+    \includegraphics[width=0.6\textwidth]{figures/matrizHFSS/integracao.png}
+    \caption*{Fonte: Elaborado pelos autores. }
+  \end{center}
+\end{figure} 
 
 % ----------------------------------------------------------
 % Capitulo com exemplos de comandos inseridos de arquivo externo 
